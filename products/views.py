@@ -1,10 +1,10 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import Category, Product, Order
-from .serializer import CategorySerializer, ProductSerailizer, OrderSerializer
+from .serializer import CategorySerializer, ProductSerializer, OrderSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
+
 
 class CategoryApiView(APIView):
     def get(self, request):
@@ -19,15 +19,12 @@ class CategoryApiView(APIView):
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-        
-    
 
 class CategoryDetailApiView(APIView):
     def get(self, request, id):
         category = get_object_or_404(Category, id=id)
         serializer = CategorySerializer(category)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
-    
 
     def put(self, request, id):
             category = get_object_or_404(Category, id=id)
@@ -50,22 +47,21 @@ class CategoryDetailApiView(APIView):
         else:
             category.delete()
             return Response(
-                data={ProductSerailizer
+                data={
+                    'success': True,
+                    'message': 'Category successfully deleted'
                 }
             )
-         
-
 
 
 class ProductApiView(APIView):
     def get(self, request):
         product = Product.objects.all()
-        serializer = ProductSerailizer(product, many=True)
+        serializer = ProductSerializer(product, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
-    
 
     def post(self, request):
-        serializer = ProductSerailizer(data=request.data)
+        serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_200_OK)
@@ -75,17 +71,16 @@ class ProductApiView(APIView):
 class ProductDetailApiVew(APIView):
     def get(self, request, id):
         product = get_object_or_404(Product, id=id)
-        serailizer = ProductSerailizer(product)
-        return Response(data=serailizer.data, status=status.HTTP_200_OK)
+        serializer = ProductSerializer(product)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
     
     def put(self, request, id):
         product = get_object_or_404(Product, id=id)
-        serializer = ProductSerailizer(instance=product, data=request.data)
+        serializer = ProductSerializer(instance=product, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
     def delete(self, request, id):
         try:
@@ -105,8 +100,6 @@ class ProductDetailApiVew(APIView):
                     'message': 'Product successfully deleted'
                 }
             )
-
-
 
 
 class OrderApiView(APIView):
@@ -129,7 +122,6 @@ class OrderDetailApiView(APIView):
         serializer = OrderSerializer(order)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
     
-    
     def put(self, request, id):
         order = get_object_or_404(Order, id=id)
         serializer = OrderSerializer(instance=order, data=request.data)
@@ -137,7 +129,6 @@ class OrderDetailApiView(APIView):
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
     def delete(self, request, id):
         try:

@@ -4,7 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import RegisterSerializer,  LoginSerializer, UserSerializer
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from .models import User
 
 
@@ -20,10 +20,9 @@ class LoginUserApiView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
-        password = request.data.get('password')
-        # user = authenticate(username=username, password=password)
         user = User.objects.filter(username=username).first()
         if user is not None:
+            login(request, user)
             return Response(
                 data={
                     'id': user.id,
@@ -41,8 +40,6 @@ class LoginUserApiView(generics.CreateAPIView):
                     'message': 'username or password invalid'
                 }, status=status.HTTP_401_UNAUTHORIZED
             )
-
-
 
 
 class UserApiView(APIView):

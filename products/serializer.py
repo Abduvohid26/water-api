@@ -8,8 +8,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'created_at']
 
 
-
-class ProductSerailizer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'category', 'size', 'price']
@@ -18,5 +17,4 @@ class ProductSerailizer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields =  ['id', 'username', 'product', 'category', 'phone_number', 'address', 'count', 'status']
-
+        fields = ['id', 'username', 'product', 'category', 'phone_number', 'address', 'count', 'status']

@@ -33,7 +33,6 @@ class User(AbstractUser):
     longitude1 = models.FloatField(null=True, blank=True)
     balance = models.DecimalField(max_digits=12, decimal_places=3, null=True)
 
-
     def __str__(self):
         return self.username
 

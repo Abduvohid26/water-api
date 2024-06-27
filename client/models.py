@@ -44,13 +44,9 @@ class Client(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     client_id = models.CharField(max_length=5, null=True, blank=True)
 
-
     def __str__(self):
         return f'{self.username} {self.phone_number}'
     
-
-
-
 
 @receiver(post_save, sender=Client)
 def send_client_data(sender, instance, created, **kwargs):
@@ -63,7 +59,6 @@ def send_client_data(sender, instance, created, **kwargs):
         
         telegram_bot_token = "7001254412:AAEqIrIXC2EJhWuyDKcPk1x2BeTmI7YHcWg"
         chat_id = "5700964012"
-        
  
         text_url = f"https://api.telegram.org/bot{telegram_bot_token}/sendMessage"
         text_data = {

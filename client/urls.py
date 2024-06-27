@@ -10,5 +10,4 @@ urlpatterns = [
     path('rayon/<uuid:id>/', RayonDetailApiView.as_view()),
     path('data/', ClientDataAPIView.as_view()),
     path('data/<str:client_id>/', ClientDataDetailAPIView.as_view()),
-
 ]

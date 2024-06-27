@@ -24,6 +24,7 @@ class RayonSerializer(serializers.ModelSerializer):
 
 class ClientDataSerializer(serializers.ModelSerializer):
     region = RayonSerializer()
+
     class Meta:
         model = Client
         fields = ['id', 'client_id', 'username', 'phone_number', 'latitude',

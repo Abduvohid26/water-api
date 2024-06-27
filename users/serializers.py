@@ -5,7 +5,6 @@ from users.models import User
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=128, write_only=True)
-    confirm_password = serializers.CharField(max_length=128, write_only=True)
 
     class Meta:
         model = User
@@ -15,7 +14,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             'phone_number1',
             'user_roles',
             'password',
-            'confirm_password'
         )
 
     def create(self, validated_data):
@@ -27,29 +25,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         username = data.get('username')
-        password = data.get('password')
-        confirm_password = data.pop('confirm_password', None)
 
         if username and User.objects.filter(username=username).exists():
             raise ValidationError({'username': 'Username already exists'})
-
-        if password != confirm_password:
-            raise ValidationError({'confirm_password': 'Passwords do not match'})
-        print(data)
         return data
-
-
-# class WorkerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Worker
-#         fields = [
-#             'id',
-#             'username',
-#             'phone_number',
-#             'worker_roles',
-#             'description',
-#             'created_at',
-#         ]
 
 
 class LoginSerializer(serializers.ModelSerializer):

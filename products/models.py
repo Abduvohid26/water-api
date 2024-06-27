@@ -3,6 +3,7 @@ from django.utils import timezone
 import uuid
 from users.models import phone_regex
 
+
 class Category(models.Model):
     id = models.URLField(editable=False, primary_key=True, default=uuid.uuid4, unique=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -21,8 +22,11 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name} {self.price}'
-    
+
+
 NAQT, KARTA = ('naqt', 'karta', )
+
+
 class Order(models.Model):
     STATUS = (
         (NAQT, NAQT),
