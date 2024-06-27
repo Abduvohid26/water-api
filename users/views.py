@@ -70,6 +70,14 @@ class UserDetailApiView(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, request, id):
+        user = get_object_or_404(User, id=id)
+        serializer = UserSerializer(instance=user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def delete(self, request, id):
         try:
             user = get_object_or_404(User, id=id)

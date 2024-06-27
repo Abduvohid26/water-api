@@ -50,19 +50,3 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.check_hash_password()
         super(User, self).save(*args, **kwargs)
-
-
-# class Worker(models.Model):
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-#     username = models.CharField(max_length=255)
-#     phone_number = models.CharField(max_length=31, unique=True, validators=[phone_regex])
-#     worker_roles = models.CharField(max_length=255)
-#     description = models.TextField()
-#     created_at = models.DateTimeField(default=timezone.now)
-
-#     def __str__(self):
-#         return self.username
-
-
-
-
